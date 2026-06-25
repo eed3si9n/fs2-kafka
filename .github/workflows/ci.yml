@@ -59,7 +59,7 @@ jobs:
       #- name: Check that workflows are up to date
       #  run: sbt githubWorkflowCheck
 
-      - run: sbt '++ ${{ matrix.scala }}' ci
+      - run: sbt -v '++ ${{ matrix.scala }}' ci
 
       - if: matrix.scala == '2.13'
         run: sbt '++ ${{ matrix.scala }}' docs/run
