@@ -163,12 +163,12 @@ lazy val mdocSettings = Seq(
       .dependsOn(ThisBuild / updateSiteVariables)
       .value,
   // format: off
-  ScalaUnidoc / unidoc / scalacOptions ++= Seq(
-    "-doc-source-url", s"https://github.com/typelevel/fs2-kafka/tree/v${(ThisBuild / latestVersion).value}€{FILE_PATH}.scala",
-    "-sourcepath", (LocalRootProject / baseDirectory).value.getAbsolutePath,
-    "-doc-title", "FS2 Kafka",
-    "-doc-version", s"v${(ThisBuild / latestVersion).value}"
-  )
+  // ScalaUnidoc / unidoc / scalacOptions ++= Seq(
+  //   "-doc-source-url", s"https://github.com/typelevel/fs2-kafka/tree/v${(ThisBuild / latestVersion).value}€{FILE_PATH}.scala",
+  //   "-sourcepath", (LocalRootProject / baseDirectory).value.getAbsolutePath,
+  //   "-doc-title", "FS2 Kafka",
+  //   "-doc-version", s"v${(ThisBuild / latestVersion).value}"
+  // )
   // format: on
 )
 
@@ -179,7 +179,7 @@ lazy val buildInfoSettings = Seq(
     scalaVersion,
     scalacOptions,
     sourceDirectory,
-    ThisBuild / latestVersion,
+    // ThisBuild / latestVersion,
     BuildInfoKey.map(ThisBuild / version) { case (_, v) =>
       "latestSnapshotVersion" -> v
     },
@@ -327,12 +327,12 @@ def minorVersion(version: String): String = {
   s"$major.$minor"
 }
 
-val latestVersion = settingKey[String]("Latest stable released version")
-ThisBuild / latestVersion := tlLatestVersion
-  .value
-  .getOrElse(
-    throw new IllegalStateException("No tagged version found")
-  )
+// val latestVersion = settingKey[String]("Latest stable released version")
+// ThisBuild / latestVersion := tlLatestVersion
+//   .value
+//   .getOrElse(
+//     throw new IllegalStateException("No tagged version found")
+//   )
 
 val updateSiteVariables = taskKey[Unit]("Update site variables")
 ThisBuild / updateSiteVariables := {
@@ -343,7 +343,7 @@ ThisBuild / updateSiteVariables := {
     Map[String, String](
       "organization"         -> (LocalRootProject / organization).value,
       "coreModuleName"       -> (core / moduleName).value,
-      "latestVersion"        -> latestVersion.value,
+      // "latestVersion"        -> latestVersion.value,
       "scalaPublishVersions" -> {
         val minorVersions = (core / crossScalaVersions).value.map(minorVersion)
         if (minorVersions.size <= 2) minorVersions.mkString(" and ")
